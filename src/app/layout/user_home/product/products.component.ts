@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserProductsService } from './products.service'
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 import { map } from 'rxjs/operators';
 import { IMAGE_HOST, createRequestOption } from '../../../request-util';
 
@@ -26,15 +28,17 @@ export class UserProductsComponent implements OnInit {
   editField: string;
   quantity_commanded: number;
   original_product: any;
+  etat_produit: string[];
   // @Output() pageChanged: EventEmitter<number> = new EventEmitter();
 
-  constructor(private route: ActivatedRoute, private router: Router, private productService: UserProductsService) {
+  constructor(private route: ActivatedRoute, private router: Router, private productService: UserProductsService, private toastr: ToastrService) {
     this.products = [];
     this.shoppingBasket = [];
     this.product = {};
     this.productSelected = {};
     this.original_product = {};
-    this.types = ['Comprimés', 'Géllules', 'Sirop', 'Autres']
+    this.types = ['Matériel', 'Equipement', 'Médicament']
+    this.etat_produit = ['Neuf', 'Peu Utilisé', 'Usa  gé']
     this.pager_infos = [];
   }
 
@@ -91,6 +95,7 @@ export class UserProductsComponent implements OnInit {
   }
 
   public addProduct(elm?) {
+    console.log(this.model);
     if (this.model.id) {
       this.loading= true;
       // console.log(elm);
@@ -103,10 +108,12 @@ export class UserProductsComponent implements OnInit {
             console.log(resp);
             this.model={};
             this.loading=false;
+            this.toastr.success('Succès!', 'Produit Mise à jour!');
             jQuery("#addProduct").modal("hide");
           },
           (error) => {
             this.loading=false;
+            this.toastr.error('Echec!', 'Désolé la mise à jour à échoué!');
             console.log(error);
           }
         )
@@ -116,9 +123,14 @@ export class UserProductsComponent implements OnInit {
           (resp) => {
             resp.data.image_url = this.image_url + resp.data.image;
             this.products.push(resp.data);
+            this.model={};
+            this.loading=false;
+            this.toastr.success('Succès!', 'Produit enregistré!');
             jQuery("#addProduct").modal("hide");
           },
           (error) => {
+            this.loading=false;
+            this.toastr.error('Echec!', 'Désolé échec l\'ajout!');
             console.log(error);
           }
         )

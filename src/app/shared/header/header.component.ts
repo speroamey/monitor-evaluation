@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { PrincipalService } from "../services/principal.service";
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Response } from "@angular/http";
 import { HttpResponse, HttpErrorResponse } from "@angular/common/http";
 
@@ -25,7 +26,7 @@ export class HeaderComponent implements OnInit {
     message: string;
     validationErrors = [];
 
-    constructor(private router: Router, public principal: PrincipalService) { 
+    constructor(private router: Router, public principal: PrincipalService, private toastr: ToastrService) { 
         this.isAuthenticated=false;
         this.validationErrors = []
     }
@@ -47,21 +48,17 @@ export class HeaderComponent implements OnInit {
                 this.isAuthenticated=true;
                 this.closeModal();
                 this.connectedUser();
-                var x = jQuery('#snackId');
-                // Add the "show" class to DIV
-                x.className = "show";
-
-                // After 3 seconds, remove the show class from DIV
-                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
                 this.model={};
-                // this.data=result;
-                // this.router.navigate(['/']);
+                this.toastr.success('Succès!', 'Connecté!');
+
+               
             }, 
             (error)=>{
                 // console.log("something",error);
                 this.isSaving = false;
                 console.log(error);
                 this.model={};
+                this.toastr.error('Echec!', 'Non Authentifié!');
                 this.error= error.json().message;
                 // this.toastr.error('Erreur!', 'Identifiants Incorrect!');
         });
@@ -90,19 +87,15 @@ export class HeaderComponent implements OnInit {
             this.isSaving = false;
             this.closeModal();
             this.model={};
+            this.toastr.success('Succès!', 'Compte créé avec succès!');
             this.message = 'Félictation votre Inscription a été pris en compte, Un mail vous a été envoyé, veuillez prendre connaissance des informations nécessaires pour pouvoir vous connecter '
             jQuery('#info-token').modal('show');
         }, 
             (error : HttpErrorResponse | any) => {
-            // console.log('whats going wrong 1');
            
-            
-            // let e= JSON.parse(error)
             console.log('cest xa mm', error);
             console.log(error instanceof HttpErrorResponse);
-            
-
-                const errorMessages = new Array<{ propName: string; errors: string }>();
+            const errorMessages = new Array<{ propName: string; errors: string }>();
             
             if (error.status === 422) {
                     console.log('condition 2', error.json());
@@ -116,8 +109,7 @@ export class HeaderComponent implements OnInit {
                   // TODO: extract errors here and match onto the form
             }
             
-
-            console.log('whats going wrong 2');
+            this.toastr.error('Echec!', 'Désolé votre compte n\'a pas pu être créé!');
             this.errorSignUp = "Une erreur s'est produite lors de l'opération,Veuillez réessayer";
             this.isSaving = false;
             // this.model={};
@@ -133,11 +125,15 @@ export class HeaderComponent implements OnInit {
         this.principal.getDisconnect()
         .subscribe( (resp) => {
             // console.log(resp);
+            this.toastr.success('Succès!', 'Vous êtes déconnecté!');
             this.router.navigate(['/layout/home']);
             localStorage.removeItem('authenticationtoken');
             localStorage.removeItem('refreshtoken');
+
         }, (error) => {
             console.log(error);
+            this.toastr.success('Echec!', 'Erreur de déconnection!');
+
         });
     }
     openResetModal(){

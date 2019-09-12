@@ -3,7 +3,9 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+ 
+import { ToastrModule } from 'ngx-toastr';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpClientModule,HttpClient} from '@angular/common/http';
 import { HttpModule} from '@angular/http';
@@ -24,6 +26,8 @@ import {ResetPasswordComponent} from './shared/reset-password/reset-password.com
   imports: [
     CommonModule,
     BrowserModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
     FormsModule,
     AppRoutingModule,
     HttpModule,

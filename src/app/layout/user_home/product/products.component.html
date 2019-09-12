@@ -167,7 +167,16 @@
                         <select class="browser-default custom-select" name="type" [(ngModel)]="model.type" #type="ngModel" required>
                                 <option *ngFor="let type of types" [ngValue]="type">{{type}}</option>
                             </select>
-                        <div *ngIf="addForm.submitted && !type.valid" class="help-block">type is required</div>
+                        <div *ngIf="addForm.submitted && !type.valid" class="help-block">type est requis</div>
+                    </div>
+
+                    <div class="form-group" [ngClass]="{ 'has-error': addForm.submitted && !etat.valid }">
+                        <label for="etat" class="text-black">Etat du produit</label>
+                        <select class="browser-default custom-select" name="etat" [(ngModel)]="model.etat" #etat="ngModel" required>
+                                <option > Choisissez l'état du Produit</option>
+                                <option *ngFor="let etat of etat_produit" [ngValue]="etat">{{etat}}</option>
+                            </select>
+                        <div *ngIf="addForm.submitted && !etat.valid" class="help-block">Etat est requis</div>
                     </div>
 
                     <div class="form-group" [ngClass]="{ 'has-error': addForm.submitted && !description.valid }">
