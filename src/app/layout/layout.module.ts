@@ -4,18 +4,13 @@ import { CommonModule } from '@angular/common';
 import { LayoutRoutingModule } from './layout.routing.module';
 import { LayoutComponent } from './layout.component';
 import { HeaderComponent } from '../shared/header/header.component';
-import { ContactUsComponent } from './contact-us/contact-us.component';
 
 import { UserHomeModule } from './user_home/user_home.module';
-import { ProductsComponentModule } from './product/products.module'
-import { NewsComponentModule } from './news/news.component.module'
+
 import { HomeComponentModule} from './home/home.component.module'
+import { MainboardComponentModule} from './mainboard/mainboard.component.module'
 
-import { TestifyComponentModule } from './testify/testify.component.module'
-import { PrestationsComponentModule } from './prestations/prestations.component.module'
-import {AboutUsComponentModule} from './about-us/about-us.component.module'
-
-import {EqualValidator} from './custom-password-validation.directive'
+import {SharedModule} from '../shared/shared.modulle'
 
 import { FormsModule } from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination'; 
@@ -26,18 +21,16 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
         CommonModule,
         FormsModule,
         HomeComponentModule,
+        MainboardComponentModule,
         LayoutRoutingModule,
-        NewsComponentModule,
         UserHomeModule,
         NgxPaginationModule,
         Ng2SearchPipeModule,
-        AboutUsComponentModule              
+        SharedModule,
     ],
     declarations: [
         LayoutComponent,
         HeaderComponent,
-        EqualValidator,
-        
     ]
 })
 export class LayoutModule { }

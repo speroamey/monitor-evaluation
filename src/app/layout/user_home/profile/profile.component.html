@@ -8,20 +8,22 @@
 
                 </div>
                 <div class="avatar" data-toggle="modal" data-target="#changeAvatar">
-                    <img alt="" [src]="model.avatar_url || tmp_image" />
+                    <img *ngIf="model.avatar" alt="" [src]="model.avatar_url || tmp_image" />
+                    <img *ngIf="!model.avatar" alt="" [src]="tmp_image" />
+
                 </div>
                 <div class="info">
                     <div class="title">
-                        <a target="_blank" href="https://scripteden.com/">{{model.name}}</a>
+                        <a target="#" href="#">{{model.name}}</a>
                     </div>
                     <div class="desc">{{model.profession}}</div>
                     <div class="desc"> {{model.email}}</div>
                     <div class="desc">{{model.phone}}</div>
                 </div>
                 <div class="bottom">
-                    <a class=" btn-primary  btn-sm" href="https://twitter.com/webmaniac" data-toggle="modal" data-target="#changePassword">
+                    <!--<a class=" btn-primary  btn-sm" href="#" data-toggle="modal" data-target="#changePassword">
                         <i class="fa fa-key"></i> Mot de Passe
-                    </a>
+                    </a>-->
 
                 </div>
             </div>

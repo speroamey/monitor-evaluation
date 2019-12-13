@@ -20,8 +20,8 @@
 
                 </div>
                 <div class="col-md-2 curseur navbar-brand">
-                    <a [routerLink]="['/layout/home']" [routerLinkActive]="['router-link-active']" > 
-                        <img  src="/assets/img/logo.png" alt="logo">
+                    <a [routerLink]="['/layout/home']" [routerLinkActive]="['router-link-active']">
+                        <img src="/assets/img/logo.png" alt="logo">
                     </a>
                 </div>
                 <!--<div class="offset-md-1">
@@ -59,14 +59,15 @@
                 <div class="col-md-1">
                     <div class="float-right dropdown">
                         <span class="chip chip-light dropdown-toggle" data-toggle="dropdown" style="cursor: pointer" id="dropdownMenuButton2" aria-expanded="false" aria-haspopup="true">
-                                        <i class="chip-icon-blue ">C</i>Mon Compte </span>
+                            <i class="chip-icon-blue ">C</i>Mon Compte </span>
                         <div aria-labelledby="dropdownMenuButton2" class="dropdown-menu dropdown-menu-sm text-center font-weight-bold">
                             <label class="  my-1 text-black  font-weight-bold" *ngIf="isLogin" [routerLink]="[ '/layout/user-home/products'] " style="cursor: pointer; line-height:30px">Mon Espace Pro! </label>
 
                             <label class="  my-1 text-black  font-weight-bold" data-toggle="modal" *ngIf="!isLogin" data-target="#connexion" style="cursor: pointer; line-height:30px">Se Connecter
                                         
-                                    </label>
-                            <div></div>
+                            </label>
+                            <div>
+                            </div>
                             <label class="  my-1  text-black font-weight-bold" data-toggle="modal" data-target="#creation" *ngIf="!isLogin" style="cursor: pointer; line-height:30px">S'enregistrer <br></label>
 
                             <label class="  my-1  text-black font-weight-bold" (click)="disconnect()" *ngIf="isLogin" style="cursor: pointer;line-height:30px ">Déconnexion</label>
@@ -103,9 +104,9 @@
                 </p>
                 <form name="editForm" role="form" novalidate (ngSubmit)="login()" #editForm="ngForm">
                     <div class="form-group">
-                        <label for="username">Adresse Mail:</label>
-                        <input type="text" class="form-control" id="username" name="username" [(ngModel)]="model.username" #username="ngModel" required>
-                        <small *ngIf="username.touched && username.invalid" class="help-block text-danger">Nom d'utilisateur required</small>
+                        <label for="email">Adresse Mail:</label>
+                        <input type="text" class="form-control" id="email" name="email" [(ngModel)]="model.email" #email="ngModel" required>
+                        <small *ngIf="email.touched && email.invalid" class="help-block text-danger">Email requis</small>
                     </div>
                     <div class="form-group">
                         <label for="Password" class="">Mot de Passe:</label>
@@ -120,7 +121,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="forgotPassword" class="text-black font-weight-bold" style="cursor:pointer" (click)="openResetModal()" >Mot de Passe Oublié?</label>
+                        <label for="forgotPassword" class="text-black font-weight-bold" style="cursor:pointer" (click)="openResetModal()">Mot de Passe Oublié?</label>
                     </div>
 
                 </form>
@@ -146,7 +147,7 @@
                 <form name="resetForm" role="form" novalidate (ngSubmit)="resetingPasswordToken()" #resetForm="ngForm">
                     <div class="form-group">
                         <label for="username">Adresse Mail:</label>
-                        <input type="email" class="form-control" id="email" name="username" [(ngModel)]="reset.email" #username="ngModel" required>
+                        <input type="email" class="form-control" id="username" name="username" [(ngModel)]="reset.email" #username="ngModel" required>
                         <small *ngIf="username.touched && username.invalid" class="help-block text-danger">Email requis</small>
                     </div>
                     <!--<div class="form-group">
@@ -157,12 +158,9 @@
                     <div class="form-group">
                         <i *ngIf="isSaving" class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
                         <button type="submit" class="btn btn-primary snackbar-toggler" style="float: right" [disabled]="resetForm.form.invalid || isSaving">{{isSaving?'....':''}}
-                                    Connecter
-                                </button>
+                             Connecter
+                        </button>
                     </div>
-
-                    
-
                 </form>
             </div>
         </div>
@@ -185,7 +183,7 @@
                     <div class="container">
                         <div class="row justify-content-md-center">
                             <div class="text-danger font-weight-bold m-4">
-                            {{message}}
+                                {{message}}
                             </div>
                         </div>
                     </div>
@@ -246,6 +244,12 @@
                         <input type="password" minlength="6" class="form-control" name="password_confirmation" validateEqual="password" [(ngModel)]="model.password_confirmation" #password_confirmation="ngModel" required />
                         <small *ngIf="password_confirmation.touched && password_confirmation.invalid" class="help-block text-danger">Les mots de passes ne correspondent pas</small>
                     </div>
+
+                    <div class="form-check" [ngClass]="{ 'has-error': f.submitted && !condition.valid }">
+                        <input type="checkbox" class="form-check-input" id="condition" name="condition" [(ngModel)]="model.conditions" #condition="ngModel" required>
+                        <label class="form-check-label" for="conditions">J'accepte les Conditions d'utilisations</label>
+                    </div>
+                    <a [routerLink]="['/layout/terms-of-use']"> Lire les conditions</a>
 
                     <div class="form-group">
                         <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="

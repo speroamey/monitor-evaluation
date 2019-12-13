@@ -1,6 +1,6 @@
 import { PrincipalService, CONNEXION } from './shared/services/principal.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 declare let jQuery: any;
 
 @Component({
@@ -12,15 +12,29 @@ export class AppComponent implements OnInit {
   title = 'app';
   inactivityTimeout: any;
   isLoggedIn: boolean;
+  loading = false;
   constructor(private principal: PrincipalService, private router: Router) {
    
   }
   ngOnInit(){
-    console.log("alert");
+    this.router.events.subscribe((v) => this.navigationInterceptor(v ));
     // window.reload()
     
   }
     //window.onload = resetTimer;
    
- 
+    navigationInterceptor(event): void {
+      if (event instanceof NavigationStart) {
+          this.loading = true;
+      }
+      if (event instanceof NavigationEnd) {
+          this.loading = false;
+      }
+      if (event instanceof NavigationCancel) {
+          this.loading = false;
+      }
+      if (event instanceof NavigationError) {
+          this.loading = false;
+      }
+  }
 }

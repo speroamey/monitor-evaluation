@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import {ContactUsComponent} from '../../shared/contact-us/contact-us.component'
 
 import { HomeComponent } from './home.component';
 import { AboutUsService } from '../about-us/about-us.service';
-import { ContactUsComponent } from '../contact-us/contact-us.component';
-import {NewsService} from '../news/news.service'
+
+import {ContactUsComponentModule} from '../../shared/contact-us/contact-us.component.module'
+import { ContactUsService } from '../../shared/contact-us/contact-us.service';
 
 @NgModule({
     imports: [
@@ -18,8 +20,7 @@ import {NewsService} from '../news/news.service'
         HomeComponent,
     ],
     providers: [
-        AboutUsService,
-        NewsService
+        AboutUsService,        
     ],
 })
 export class HomeComponentModule { }

@@ -37,8 +37,8 @@ export class UserProductsComponent implements OnInit {
     this.product = {};
     this.productSelected = {};
     this.original_product = {};
-    this.types = ['Matériel', 'Equipement', 'Médicament']
-    this.etat_produit = ['Neuf', 'Peu Utilisé', 'Usa  gé']
+    this.types = ['Matériel', 'Equipement', 'Médicament', 'Produit Naturel']
+    this.etat_produit = ['Neuf', 'Peu Utilisé', 'Usagé']
     this.pager_infos = [];
   }
 
@@ -107,31 +107,32 @@ export class UserProductsComponent implements OnInit {
             this.model = resp.data;
             console.log(resp);
             this.model={};
-            this.loading=false;
             this.toastr.success('Succès!', 'Produit Mise à jour!');
             jQuery("#addProduct").modal("hide");
+            this.loading=false;
           },
           (error) => {
-            this.loading=false;
             this.toastr.error('Echec!', 'Désolé la mise à jour à échoué!');
             console.log(error);
+            this.loading=false;
           }
         )
     } else {
+      this.loading=true;
       this.productService.addProduct(this.model)
         .subscribe(
           (resp) => {
             resp.data.image_url = this.image_url + resp.data.image;
             this.products.push(resp.data);
             this.model={};
-            this.loading=false;
             this.toastr.success('Succès!', 'Produit enregistré!');
             jQuery("#addProduct").modal("hide");
+            this.loading=false;
           },
           (error) => {
-            this.loading=false;
             this.toastr.error('Echec!', 'Désolé échec l\'ajout!');
             console.log(error);
+            this.loading=false;
           }
         )
     }

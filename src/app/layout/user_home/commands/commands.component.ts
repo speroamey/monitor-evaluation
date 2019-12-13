@@ -28,6 +28,7 @@ export class UserCommandsComponent implements OnInit {
   original_product: any;
   user: any;
   command_lines_commands: any;
+  global_infos: any;
   // @Output() pageChanged: EventEmitter<number> = new EventEmitter();
 
   constructor(private route: ActivatedRoute, private router: Router, private commandService: UserCommandsService) {
@@ -73,7 +74,7 @@ export class UserCommandsComponent implements OnInit {
 
   showCommandDetails(item){
     console.log(item);
-    
+    this.global_infos  = item;
     this.CommandLinesCommandsList(item.id);
     jQuery("#showCommandDetails").modal("show");
   }
@@ -91,11 +92,18 @@ export class UserCommandsComponent implements OnInit {
       )
   }
  
-  activeUser(val,obj){
-    obj.active = val
-    console.log(val);
-    this.user = obj;
-    this.commandService.updateUserStatus(obj)
+  updateCommandState(val,obj){
+
+    if(val == 0){
+      obj.state = "Commanded";
+      obj.active= val
+      console.log(obj);
+    }else{      
+      obj.state = "Delivered";
+      obj.active= val
+      console.log(obj);
+    }
+    this.commandService.updateCommandStatus(obj)
     .subscribe(
       (resp) => {
         let obj = resp.data;

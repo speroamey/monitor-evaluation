@@ -2,8 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { PrincipalService } from "../services/principal.service";
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Response } from "@angular/http";
-import { HttpResponse, HttpErrorResponse } from "@angular/common/http";
+import {  HttpErrorResponse } from "@angular/common/http";
 
 declare let SmoothScroll: any;
 declare let jQuery: any;
