@@ -10,7 +10,7 @@ const postcssUrl = require('postcss-url');
 const postcssImports = require('postcss-import');
 
 const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
-const { NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin, PostcssCliResources } = require('@angular/cli/plugins/webpack');
+//const { NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin, PostcssCliResources } = require('@angular/cli/plugins/webpack');
 const { CommonsChunkPlugin } = require('webpack').optimize;
 const { AngularCompilerPlugin } = require('@ngtools/webpack');
 
@@ -107,11 +107,11 @@ const postcssPlugins = function (loader) {
                 },
                 { url: 'rebase' },
             ]),
-            PostcssCliResources({
-                deployUrl: loader.loaders[loader.loaderIndex].options.ident == 'extracted' ? '' : deployUrl,
-                loader,
-                filename: `[name]${hashFormat.file}.[ext]`,
-            }),
+            // PostcssCliResources({
+            //     deployUrl: loader.loaders[loader.loaderIndex].options.ident == 'extracted' ? '' : deployUrl,
+            //     loader,
+            //     filename: `[name]${hashFormat.file}.[ext]`,
+            // }),
             autoprefixer({ grid: true }),
         ];
     };
@@ -448,7 +448,7 @@ module.exports = {
       "onDetected": false,
       "cwd": projectRoot
     }),
-    new NamedLazyChunksWebpackPlugin(),
+    //new NamedLazyChunksWebpackPlugin(),
     new HtmlWebpackPlugin({
       "template": "./src/index.html",
       "filename": "./index.html",
@@ -477,7 +477,7 @@ module.exports = {
         }
     }
     }),
-    new BaseHrefWebpackPlugin({}),
+    //new BaseHrefWebpackPlugin({}),
     new CommonsChunkPlugin({
       "name": [
         "inline"
