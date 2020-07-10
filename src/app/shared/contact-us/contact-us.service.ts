@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams,BaseRequestOptions } from '@angular/http';
 import { Router,  } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { PrincipalService } from '../../shared/services/principal.service';
 import { HOST, createRequestOption } from '../../request-util';
