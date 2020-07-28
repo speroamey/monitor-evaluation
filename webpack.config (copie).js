@@ -1,9 +1,11 @@
 const fs = require('fs');
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var webpack = require('webpack');
 const path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
@@ -11,7 +13,8 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: {
     'polyfills': './src/polyfills.ts',
-    'mainApp': './src/main.ts',
+    'vendor': './src/vendor.ts',
+    'mainApp': './src/app/main.ts',
     'styles':[
       "./src/styles/styles-app-loading.scss",
       "./src/styles/tailwind.min.css",
@@ -21,12 +24,10 @@ module.exports = {
   },
   output: { 
     filename: '[name].[hash].js',
-    //path: path.resolve(__dirname, 'dist')
-    path: path.resolve(process.cwd(), 'dist'),
+    path: path.resolve(__dirname, 'dist')
   },
   plugins: [
-    new webpack.ProgressPlugin(),
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: "mainApp",
       filename: 'index.html',
@@ -39,7 +40,7 @@ module.exports = {
     ])
   ],
   resolve: {
-    extensions: ['.ts','.tsx', '.js', '.json', '.css', '.scss', '.html'],
+    extensions: ['.ts','.tsx', '.js', '.json', '.css', '.scss', '.html’],
   },
   module: {
     rules: [
@@ -50,7 +51,7 @@ module.exports = {
      },
      {
        test: /\.html$/,
-       loaders: ['html-loader']
+       loaders: ['html-loader’]
      },
      {
        test: /\.(woff|woff2|ttf|eot|ico)(\?v=[0–9]\.[0–9]\.[0–9])?$/,
@@ -73,7 +74,7 @@ module.exports = {
     ]  
   },
   devServer: {
-    host: 'localhost',
-    port: 4204
+    host: 'localhost.example.com',
+    port: 8000
   }
 }

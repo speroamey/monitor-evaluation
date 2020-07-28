@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule } from 'angular-calendar';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import 'flatpickr/dist/flatpickr.css';
 import { FlatpickrModule } from 'angularx-flatpickr';
@@ -20,7 +19,10 @@ import { PrincipalService } from './shared/services/principal.service';
 import { LoggedInGuard } from './loggedIn.guard';
 import { PagerService } from './shared/services/pager.service';
 import {SharedModule} from './shared/shared.modulle'
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
+@
 @NgModule({
  
   imports: [
@@ -36,7 +38,10 @@ import {SharedModule} from './shared/shared.modulle'
     CKEditorModule,
     SharedModule,
     FlatpickrModule.forRoot(),
-    CalendarModule.forRoot()
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   declarations: [
     AppComponent
